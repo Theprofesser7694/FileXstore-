@@ -36,8 +36,8 @@ FSUB_LINK_EXPIRY = int(os.getenv("FSUB_LINK_EXPIRY", "10"))  # 0 means no expiry
 BAN_SUPPORT = os.environ.get("BAN_SUPPORT", "https://t.me/ViralVideos_linkss")
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "200"))
 #--------------------------------------------
-START_PIC = os.environ.get("START_PIC", "https://files.catbox.moe/6j41kk.jpg")
-FORCE_PIC = os.environ.get("FORCE_PIC", "https://files.catbox.moe/fih6hf.jpg")
+START_PIC = os.environ.get("START_PIC", "https://image2url.com/r2/default/images/1769010764857-1c8eb665-e51e-4598-a531-0eb5a583de1b.jpg")
+FORCE_PIC = os.environ.get("FORCE_PIC", "https://image2url.com/r2/default/images/1769010764857-1c8eb665-e51e-4598-a531-0eb5a583de1b.jpg")
 
 #--------------------------------------------
 SHORTLINK_URL = os.environ.get("SHORTLINK_URL", "linkshortify.com")
