@@ -140,16 +140,7 @@ async def add_force_sub(client: Client, message: Message):
             return await temp.edit("❌ Bot must be admin in that chat.")
 
         # Try to get invite link
-        try:
-            
-            if chat.username:
-    link = f"https://t.me/{chat.username}"
-else:   
-    
-    link = chat.invite_link
-    if not link:
-        
-        link = await client.export_chat_invite_link(chat.id)
+        try: link = await client.export_chat_invite_link(chat.id)
         except Exception:
             link = f"https://t.me/{chat.username}" if chat.username else f"https://t.me/c/{str(chat.id)[4:]}"
 
