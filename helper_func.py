@@ -120,18 +120,33 @@ async def is_sub(client, user_id, channel_id):
 #
 
 
-async def encode(string):
-    string_bytes = string.encode("ascii")
+async def encode(string: str):
+    string_bytes = string.encode("utf-8")  # ✅ ascii हटाया
     base64_bytes = base64.urlsafe_b64encode(string_bytes)
-    base64_string = (base64_bytes.decode("ascii")).strip("=")
-    return base64_string
+    return base64_bytes.decode("utf-8").rstrip("=")
 
-async def decode(base64_string):
-    base64_string = base64_string.strip("=") # links generated before this commit will be having = sign, hence striping them to handle padding errors.
-    base64_bytes = (base64_string + "=" * (-len(base64_string) % 4)).encode("ascii")
-    string_bytes = base64.urlsafe_b64decode(base64_bytes) 
-    string = string_bytes.decode("ascii")
-    return string
+
+async def decode(base64_string: str):
+    try:
+        if not base64_string:
+            return None
+
+        # ❌ invalid payload block
+        if not re.match(r'^[A-Za-z0-9_\-]+=*$', base64_string):
+            return None
+
+        # ✅ padding fix
+        missing_padding = len(base64_string) % 4
+        if missing_padding:
+            base64_string += '=' * (4 - missing_padding)
+
+        decoded_bytes = base64.urlsafe_b64decode(base64_string)
+        return decoded_bytes.decode("utf-8")  # ✅ ascii हटाया
+
+    except Exception as e:
+        print(f"[DECODE ERROR] {e}")
+        return None
+
 
 async def get_messages(client, message_ids):
     messages = []
