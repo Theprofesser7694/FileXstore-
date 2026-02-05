@@ -129,7 +129,6 @@ async def start_command(client: Client, message: Message):
             argument = string.split("-")
             ids = []
             source_channel_id = None
-
             if len(argument) == 3:
         try:
             start = int(int(argument[1]) / abs(client.db_channel.id))
