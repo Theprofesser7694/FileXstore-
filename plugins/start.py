@@ -126,18 +126,11 @@ async def start_command(client: Client, message: Message):
             print(f"Error processing start payload: {e}")
 
         string = await decode(base64_string)
+            argument = string.split("-")
+            ids = []
+            source_channel_id = None
 
-    if not string:
-    return await message.reply_text(
-        "❌ <b>Invalid या Expired Link</b>\n\n"
-        "कृपया सही डाउनलोड लिंक से दोबारा खोलें।",
-        parse_mode=ParseMode.HTML
-     )
-
-        argument = string.split("-")
-
-     ids = []
-     if len(argument) == 3:
+            if len(argument) == 3:
         try:
             start = int(int(argument[1]) / abs(client.db_channel.id))
             end = int(int(argument[2]) / abs(client.db_channel.id))
