@@ -35,30 +35,46 @@ BAN_SUPPORT = f"{BAN_SUPPORT}"
 TUT_VID = f"{TUT_VID}"
 
 async def short_url(client: Client, message: Message, base64_string):
+    prem_link = f"https://t.me/{client.username}?start=yu3elk{base64_string}7"
+
+    # ✅ API key नहीं है तो crash नहीं होगा
+    if not SHORTLINK_API:
+        return await message.reply_text(
+            "⚠️ <b>Shortlink service disabled.</b>\n\n"
+            "Admin ने API KEY set नहीं की है।\n\n"
+            f"👇 Direct Link:\n{prem_link}",
+            parse_mode=ParseMode.HTML
+        )
+
     try:
-        prem_link = f"https://t.me/{client.username}?start=yu3elk{base64_string}7"
-        short_link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, prem_link)
+        short_link = await get_shortlink(
+            SHORTLINK_URL,
+            SHORTLINK_API,
+            prem_link
+        )
 
         buttons = [
             [
-                InlineKeyboardButton(text="ᴅᴏᴡɴʟᴏᴀᴅ", url=short_link),
-                InlineKeyboardButton(text="ᴛᴜᴛᴏʀɪᴀʟ", url=TUT_VID)
+                InlineKeyboardButton("ᴅᴏᴡɴʟᴏᴀᴅ", url=short_link),
+                InlineKeyboardButton("ᴛᴜᴛᴏʀɪᴀʟ", url=TUT_VID)
             ],
             [
-                InlineKeyboardButton(text="ᴘʀᴇᴍɪᴜᴍ", callback_data="premium")
+                InlineKeyboardButton("ᴘʀᴇᴍɪᴜᴍ", callback_data="premium")
             ]
         ]
 
         await message.reply_photo(
             photo=SHORTENER_PIC,
-            caption=SHORT_MSG.format(
-            ),
+            caption=SHORT_MSG,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
 
-    except IndexError:
-        pass
-
+    except Exception as e:
+        print(f"Shortlink Error: {e}")
+        await message.reply_text(
+            f"❌ Shortlink error.\n\nDirect Link:\n{prem_link}"
+        )
+        
 
 @Bot.on_message(filters.command('start') & filters.private)
 async def start_command(client: Client, message: Message):
