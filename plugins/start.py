@@ -1,4 +1,4 @@
-from ..helper.helper_func import *
+from helper.helper_func import *
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 import humanize
@@ -350,4 +350,4 @@ async def my_plan(client: Client, message: Message):
             "🔸 Request: Disabled\n\n"
             "🔓 Unlock Premium to get more benefits\n"
             "Contact: @GetoPro"
-                    )
+                )
