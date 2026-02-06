@@ -1,4 +1,4 @@
-from helper.helper_func import *
+from ..helper.helper_func import *
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 import humanize
